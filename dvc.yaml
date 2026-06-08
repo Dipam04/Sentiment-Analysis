@@ -1,0 +1,39 @@
+stages:
+    data_ingestion:
+        cmd: python src/Pipeline/data_ingestion.py
+        deps: 
+          - src/Pipeline/data_ingestion.py
+        outs: 
+          - data
+
+    data_preprocessing:
+        cmd: python src/Pipeline/data_preprocessing.py
+        deps: 
+          - data
+          - src/Pipeline/data_preprocessing.py
+        outs: 
+          - processed
+
+    feature_extraction:
+        cmd: python src/Pipeline/feature_extraction.py
+        deps: 
+          - processed
+          - src/Pipeline/feature_extraction.py
+        outs: 
+          - features
+
+    model_building:
+        cmd: python src/Pipeline/model_building.py
+        deps: 
+          - features
+          - src/Pipeline/model_building.py
+        outs: 
+          - model
+      
+    model_evaluation:
+        cmd: python src/Pipeline/model_evaluation.py
+        deps: 
+          - model
+          - src/Pipeline/model_evaluation.py
+        outs: 
+          - metrices
